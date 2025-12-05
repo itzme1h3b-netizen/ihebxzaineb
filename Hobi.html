@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Access: System Love Protocol</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        body {
+            background-color: #000;
+            color: #0f0;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Login page specific styles */
+        #loginPage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+        }
+        
+        #mainContent {
+            display: none;
+        }
+        
+        /* Animated background with moving code */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.15;
+        }
+        
+        /* Moving particles in background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #0f0;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #0f0;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Login Terminal */
+        .login-terminal {
+            background-color: rgba(0, 20, 0, 0.8);
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            width: 90%;
+            max-width: 500px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+            animation: pulse-glow 3s infinite alternate;
+        }
+        
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 40px rgba(0, 255, 0, 0.8);
+            }
+        }
+        
+        .terminal-header {
+            background-color: rgba(10, 40, 10, 0.9);
+            padding: 12px 20px;
+            border-bottom: 1px solid #0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .terminal-title {
+            font-weight: bold;
+            color: #0f0;
+            font-size: 1.1rem;
+        }
+        
+        .terminal-controls {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .close {
+            background-color: #f00;
+        }
+        
+        .minimize {
+            background-color: #ff0;
+        }
+        
+        .maximize {
+            background-color: #0f0;
+        }
+        
+        .terminal-body {
+            padding: 30px;
+        }
+        
+        .login-message {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            color: #8f8;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .form-label {
+            color: #0f0;
+            font-size: 1rem;
+        }
+        
+        .form-input {
+            background-color: rgba(0, 10, 0, 0.7);
+            border: 1px solid #0f0;
+            border-radius: 3px;
+            padding: 12px 15px;
+            color: #8f8;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            border-color: #0ff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .login-btn {
+            background-color: #0a2a0a;
+            border: 1px solid #0f0;
+            border-radius: 3px;
+            padding: 15px;
+            color: #0f0;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-btn:hover {
+            background-color: #0f3a0f;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .login-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .login-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .login-btn:hover::after {
+            left: 100%;
+        }
+        
+        .hint {
+            text-align: center;
+            margin-top: 20px;
+            color: #8f8;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        .error-message {
+            color: #f00;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            height: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .error-message.show {
+            opacity: 1;
+        }
+        
+        /* Main website styles (after login) */
+        /* Header with moving glitch effect */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glitch-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .logo {
+            font-size: 3.5rem;
+            color: #0f0;
+            text-shadow: 0 0 10px #0f0;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            position: relative;
+            animation: glitch 5s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 100% {
+                transform: translate(0);
+            }
+            1% {
+                transform: translate(-2px, 2px);
+            }
+            2% {
+                transform: translate(-2px, -2px);
+            }
+            3% {
+                transform: translate(2px, 2px);
+            }
+            4% {
+                transform: translate(2px, -2px);
+            }
+            5% {
+                transform: translate(0);
+            }
+        }
+        
+        .logo::before, .logo::after {
+            content: 'ZAINEB ABDELLI';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .logo::before {
+            animation: glitch-top 1s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+            -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+        }
+        
+        .logo::after {
+            animation: glitch-bottom 1.5s infinite;
+            clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+            -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+        }
+        
+        @keyframes glitch-top {
+            0%, 100% {
+                transform: translate(0);
+                color: #0f0;
+            }
+            33% {
+                transform: translate(-1px, 1px);
+                color: #f0f;
+            }
+            66% {
+                transform: translate(1px, -1px);
+                color: #0ff;
+            }
+        }
+        
+        @keyframes glitch-bottom {
+            0%, 100% {
+                transform: translate(0);
+                color: #0f0;
+            }
+            33% {
+                transform: translate(1px, -1px);
+                color: #f0f;
+            }
+            66% {
+                transform: translate(-1px, 1px);
+                color: #0ff;
+            }
+        }
+        
+        .tagline {
+            font-size: 1.3rem;
+            color: #8f8;
+            opacity: 0.9;
+            margin-top: 20px;
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+        
+        /* Main content with moving terminals */
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+        
+        .terminal {
+            background-color: rgba(0, 20, 0, 0.7);
+            border: 1px solid #0f0;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 550px;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.3);
+            animation: float-up 6s ease-in-out infinite;
+        }
+        
+        @keyframes float-up {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .terminal:nth-child(2) {
+            animation-delay: 1s;
+        }
+        
+        .terminal-body-main {
+            padding: 25px;
+            min-height: 280px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .command-line {
+            display: flex;
+            margin-bottom: 15px;
+            animation: typewriter 0.1s steps(40, end);
+        }
+        
+        @keyframes typewriter {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        
+        .prompt {
+            color: #0f0;
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        
+        .command {
+            color: #8f8;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+        
+        /* Heart section with beating animation */
+        .heart-section {
+            text-align: center;
+            margin: 50px 0;
+            position: relative;
+        }
+        
+        .heart-container {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .heart-container:hover {
+            transform: scale(1.1);
+        }
+        
+        .heart {
+            font-size: 5rem;
+            color: #f00;
+            animation: heartbeat 1.2s infinite;
+            text-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+            filter: drop-shadow(0 0 10px #f00);
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            10% {
+                transform: scale(1.1);
+            }
+            20% {
+                transform: scale(1);
+            }
+            30% {
+                transform: scale(1.15);
+            }
+            40% {
+                transform: scale(1);
+            }
+        }
+        
+        .heart-ring {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #f00;
+            border-radius: 50%;
+            animation: pulse-ring 2s infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        .heart-message {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #ff6b9d;
+            animation: slide-in 2s ease-out;
+        }
+        
+        @keyframes slide-in {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Secret message reveal */
+        .secret-section {
+            text-align: center;
+            margin: 60px 0;
+            opacity: 0;
+            transition: opacity 2s, transform 2s;
+            transform: translateY(50px);
+        }
+        
+        .secret-section.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .secret-box {
+            display: inline-block;
+            padding: 30px;
+            border: 2px dashed #ff6b9d;
+            border-radius: 10px;
+            background-color: rgba(30, 10, 20, 0.3);
+            max-width: 800px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .secret-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 157, 0.2), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        
+        .secret-title {
+            font-size: 1.8rem;
+            color: #ff6b9d;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 107, 157, 0.5);
+        }
+        
+        .secret-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: #ff9ec0;
+        }
+        
+        /* Footer with scanning animation */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 1px solid #0f0;
+            margin-top: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #0f0, transparent);
+            animation: scan 3s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% {
+                top: 0;
+            }
+            100% {
+                top: 100%;
+            }
+        }
+        
+        .footer-text {
+            color: #8f8;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Logout button */
+        .logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 20, 0, 0.7);
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 8px 15px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            z-index: 100;
+            transition: all 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background-color: rgba(0, 40, 0, 0.9);
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+                letter-spacing: 4px;
+            }
+            
+            .terminal {
+                max-width: 100%;
+            }
+            
+            .heart {
+                font-size: 3.5rem;
+            }
+            
+            .login-terminal {
+                width: 95%;
+            }
+        }
+        
+        /* Access granted animation */
+        .access-granted {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s;
+        }
+        
+        .access-granted.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .access-message {
+            font-size: 3rem;
+            color: #0f0;
+            text-align: center;
+            text-shadow: 0 0 20px #0f0;
+            animation: pulse 1s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage">
+        <div class="login-terminal">
+            <div class="terminal-header">
+                <div class="terminal-title">secure_login.exe</div>
+                <div class="terminal-controls">
+                    <div class="control close"></div>
+                    <div class="control minimize"></div>
+                    <div class="control maximize"></div>
+                </div>
+            </div>
+            <div class="terminal-body">
+                <div class="login-message">
+                    >_ ACCESS TO HEART PROTOCOL REQUIRED
+                </div>
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label" for="username">USERNAME:</label>
+                        <input type="text" id="username" class="form-input" placeholder="Enter username..." autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="password">PASSWORD:</label>
+                        <input type="password" id="password" class="form-input" placeholder="Enter password..." autocomplete="off">
+                    </div>
+                    <button type="submit" class="login-btn">>_ INITIATE ACCESS</button>
+                    <div class="error-message" id="errorMessage">ACCESS DENIED: Invalid credentials</div>
+                </form>
+                <div class="hint">Itz me IHEB I Luv u</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Access Granted Animation -->
+    <div class="access-granted" id="accessGranted">
+        <div class="access-message">
+            ACCESS GRANTED<br>
+            WELCOME ZAINEB
+        </div>
+    </div>
+    
+    <!-- Main Website Content (hidden initially) -->
+    <div id="mainContent">
+        <!-- Animated Matrix Background -->
+        <canvas class="matrix-bg" id="matrixCanvas"></canvas>
+        
+        <!-- Moving Particles -->
+        <div class="particles" id="particlesContainer"></div>
+        
+        <!-- Logout Button -->
+        <button class="logout-btn" id="logoutBtn">>_ LOGOUT</button>
+        
+        <div class="container">
+            <header>
+                <div class="glitch-container">
+                    <h1 class="logo">ZAINEB ABDELLI</h1>
+                </div>
+                <p class="tagline">>_ Love Protocol Initiated: Decrypting Heart Encryption</p>
+            </header>
+            
+            <main>
+                <div class="content">
+                    <!-- Terminal 1 -->
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-title">heart_diagnostic.exe</div>
+                            <div class="terminal-controls">
+                                <div class="control close"></div>
+                                <div class="control minimize"></div>
+                                <div class="control maximize"></div>
+                            </div>
+                        </div>
+                        <div class="terminal-body-main" id="terminal1">
+                            <div class="command-line">
+                                <span class="prompt">heart@zaineb:~$</span>
+                                <span class="command">run love_scan --target=zaineb_abdelli</span>
+                            </div>
+                            <div class="command-line">
+                                <span class="prompt">></span>
+                                <span class="command">Initializing deep emotional scan...</span>
+                            </div>
+                            <div class="command-line">
+                                <span class="prompt">></span>
+                                <span class="command">Target identified: Zaineb Abdelli</span>
+                            </div>
+                            <div class="command-line">
+                                <span class="prompt">></span>
+                                <span class="command">Beauty index: <span class="blink">BEYOND MEASURE</span></span>
+                            </div>
+                            <div class="command-line">
+                                <span class="prompt">></span>
+                                <span class="command">Kindness level: <span class="blink">MAXIMUM</span></span>
+                            </div>
+                            <div class="command-line">
+                                <span class="prompt">></span>
+                                <span class="command">Heart connection: <span class="blink">UNBREAKABLE</span></span>
+                            </div>
+                            <div class="command-line">
+                                <span class="prompt">></span>
+                                <span class="command" id="typingLine1"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Terminal 2 -->
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-title">memory_access.log</div>
+                            <div class="terminal-controls">
+                                <div class="control close"></div>
+                                <div class="control minimize"></div>
+                                <div class="control maximize"></div>
+                            </div>
+                        </div>
+                        <div class="terminal-body-main" id="terminal2">
+                            <div class="command-line">
+                                <span class="prompt">mem@system:~$</span>
+                                <span class="command">access romantic_moments --user=zaineb</span>
+                            </div>
+                            <div class="command-line">
+                                <span class="prompt">></span>
+                                <span class="command">Memory banks accessed successfully</span>
+                            </div>
+                            <div class="command-line">
+                                <span class="prompt">></span>
+                                <span class="command">Recalling first meeting: <span class="blink">HEART_RATE_ELEVATED</span></span>
+                            </div>
+                            <div class="command-line">
+                                <span class="prompt">></span>
+                                <span class="command">Your smile: <span class="blink">SYSTEM_OVERLOAD</span></span>
+                            </div>
+                            <div class="command-line">
+                                <span class="prompt">></span>
+                                <span class="command">Your laughter: <span class="blink">CORE_MEMORY_CREATED</span></span>
+                            </div>
+                            <div class="command-line">
+                                <span class="prompt">></span>
+                                <span class="command">Every moment with you: <span class="blink">PRICELESS</span></span>
+                            </div>
+                            <div class="command-line">
+                                <span class="prompt">></span>
+                                <span class="command" id="typingLine2"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Heart Section -->
+                <div class="heart-section">
+                    <div class="heart-container" id="heartTrigger">
+                        <div class="heart-ring"></div>
+                        <div class="heart">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
+                    <p class="heart-message">Click heart to decrypt secret message for Zaineb</p>
+                </div>
+                
+                <!-- Secret Message (hidden initially) -->
+                <div class="secret-section" id="secretSection">
+                    <div class="secret-box">
+                        <h2 class="secret-title">ENCRYPTED MESSAGE DECRYPTED</h2>
+                        <div class="secret-text">
+                            <p>To Zaineb,</p>
+                            <p>My system was running ordinary code until you hacked into my heart.</p>
+                            <p>You rewrote my core programming with love, joy, and meaning.</p>
+                            <p>Every algorithm I run now leads back to you.</p>
+                            <p>My life's code compiles perfectly only when you're in it.</p>
+                            <p>You are my most essential function, my infinite loop of happiness.</p>
+                            <p>Forever your devoted programmer,</p>
+                            <p class="blink">[Iheb Salhi]</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+            <footer>
+                <div class="scan-line"></div>
+                <p class="footer-text">System Status: <span class="blink">IN_LOVE_WITH_ZAINEB</span></p>
+                <p class="footer-text">Heart Storage: <span class="blink">100%_FULL</span> | Connection: <span class="blink">PERMANENT</span></p>
+                <p class="footer-text">© 2025 IHEB v2.0 -for Zaineb Abdelli</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Login functionality
+        const loginPage = document.getElementById('loginPage');
+        const mainContent = document.getElementById('mainContent');
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const accessGranted = document.getElementById('accessGranted');
+        const logoutBtn = document.getElementById('logoutBtn');
+        
+        // Correct credentials
+        const CORRECT_USERNAME = "zaineb";
+        const CORRECT_PASSWORD = "zaineb";
+        
+        // Login form submission
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === CORRECT_USERNAME && password === CORRECT_PASSWORD) {
+                // Success - show access granted animation
+                errorMessage.classList.remove('show');
+                
+                // Play access granted sound (simulated)
+                playAccessSound();
+                
+                // Show access granted animation
+                accessGranted.classList.add('show');
+                
+                // After animation, show main content
+                setTimeout(() => {
+                    accessGranted.classList.remove('show');
+                    loginPage.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    
+                    // Initialize main website animations
+                    initMainWebsite();
+                }, 3000);
+                
+            } else {
+                // Show error
+                errorMessage.classList.add('show');
+                
+                // Shake form for error effect
+                loginForm.style.animation = 'none';
+                setTimeout(() => {
+                    loginForm.style.animation = 'shake 0.5s';
+                }, 10);
+                
+                // Clear password field
+                document.getElementById('password').value = '';
+            }
+        });
+        
+        // Logout functionality
+        logoutBtn.addEventListener('click', function() {
+            // Hide main content
+            mainContent.style.display = 'none';
+            
+            // Show login page
+            loginPage.style.display = 'flex';
+            
+            // Clear login form
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            errorMessage.classList.remove('show');
+            
+            // Reset any animations
+            secretSection.classList.remove('revealed');
+        });
+        
+        // Simulate access granted sound with visual effect
+        function playAccessSound() {
+            // Create visual sound waves
+            for(let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const wave = document.createElement('div');
+                    wave.style.position = 'fixed';
+                    wave.style.top = '50%';
+                    wave.style.left = '50%';
+                    wave.style.transform = 'translate(-50%, -50%)';
+                    wave.style.width = '0';
+                    wave.style.height = '0';
+                    wave.style.border = '2px solid #0f0';
+                    wave.style.borderRadius = '50%';
+                    wave.style.opacity = '0.7';
+                    wave.style.zIndex = '2001';
+                    document.body.appendChild(wave);
+                    
+                    // Animate wave
+                    const size = 50 + i * 100;
+                    wave.animate([
+                        { width: '0', height: '0', opacity: 0.7 },
+                        { width: size + 'px', height: size + 'px', opacity: 0 }
+                    ], {
+                        duration: 1000,
+                        easing: 'ease-out'
+                    });
+                    
+                    // Remove wave after animation
+                    setTimeout(() => wave.remove(), 1000);
+                }, i * 200);
+            }
+        }
+        
+        // Add shake animation for error
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Main website initialization
+        function initMainWebsite() {
+            // Matrix Background
+            const canvas = document.getElementById('matrixCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const matrixChars = "01010101010101010101010101010101010101010101ザイネブアブデリ01010101010101";
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+            const drops = [];
+            
+            for(let i = 0; i < columns; i++) {
+                drops[i] = Math.random() * canvas.height;
+            }
+            
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#0f0';
+                ctx.font = fontSize + 'px monospace';
+                
+                for(let i = 0; i < drops.length; i++) {
+                    const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+                    
+                    if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    
+                    drops[i]++;
+                }
+            }
+            
+            // Create floating particles
+            const particlesContainer = document.getElementById('particlesContainer');
+            
+            function createParticles() {
+                for(let i = 0; i < 50; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    particle.style.left = Math.random() * 100 + 'vw';
+                    particle.style.top = Math.random() * 100 + 'vh';
+                    particle.style.animationDelay = Math.random() * 15 + 's';
+                    particle.style.width = Math.random() * 3 + 'px';
+                    particle.style.height = particle.style.width;
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            
+            // Terminal typing effects
+            const terminal1Lines = [
+                "Conclusion: You are my perfect algorithm.",
+                "Recommendation: Love Zaineb forever.",
+                "System command: never_stop_loving",
+                "Status: Complete. Heart captured."
+            ];
+            
+            const terminal2Lines = [
+                "Memory allocation: Infinite for Zaineb.",
+                "Storage type: Permanent, non-volatile.",
+                "Access level: Root privileges granted.",
+                "Backup created: Heart_Backup_Zaineb.forever"
+            ];
+            
+            let line1Index = 0;
+            let line2Index = 0;
+            let char1Index = 0;
+            let char2Index = 0;
+            const typingLine1 = document.getElementById('typingLine1');
+            const typingLine2 = document.getElementById('typingLine2');
+            
+            function typeTerminal1Line() {
+                if(line1Index < terminal1Lines.length) {
+                    if(char1Index < terminal1Lines[line1Index].length) {
+                        typingLine1.textContent = terminal1Lines[line1Index].substring(0, char1Index + 1);
+                        char1Index++;
+                        setTimeout(typeTerminal1Line, 50);
+                    } else {
+                        line1Index++;
+                        char1Index = 0;
+                        if(line1Index < terminal1Lines.length) {
+                            setTimeout(() => {
+                                typingLine1.textContent = '';
+                                typeTerminal1Line();
+                            }, 1500);
+                        } else {
+                            typingLine1.classList.add('blink');
+                        }
+                    }
+                }
+            }
+            
+            function typeTerminal2Line() {
+                if(line2Index < terminal2Lines.length) {
+                    if(char2Index < terminal2Lines[line2Index].length) {
+                        typingLine2.textContent = terminal2Lines[line2Index].substring(0, char2Index + 1);
+                        char2Index++;
+                        setTimeout(typeTerminal2Line, 50);
+                    } else {
+                        line2Index++;
+                        char2Index = 0;
+                        if(line2Index < terminal2Lines.length) {
+                            setTimeout(() => {
+                                typingLine2.textContent = '';
+                                typeTerminal2Line();
+                            }, 1500);
+                        } else {
+                            typingLine2.classList.add('blink');
+                        }
+                    }
+                }
+            }
+            
+            // Heart click to reveal secret message
+            const heartTrigger = document.getElementById('heartTrigger');
+            const secretSection = document.getElementById('secretSection');
+            
+            heartTrigger.addEventListener('click', function() {
+                secretSection.classList.add('revealed');
+                
+                // Add glitch effect to header
+                const logo = document.querySelector('.logo');
+                logo.style.animation = 'none';
+                setTimeout(() => {
+                    logo.style.animation = 'glitch 5s infinite';
+                }, 10);
+                
+                // Create explosion of small hearts
+                for(let i = 0; i < 30; i++) {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '<i class="fas fa-heart" style="color:#ff6b9d;font-size:1rem;"></i>';
+                    heart.style.position = 'absolute';
+                    heart.style.left = '50%';
+                    heart.style.top = '50%';
+                    heart.style.transform = `translate(${Math.random()*200 - 100}px, ${Math.random()*200 - 100}px)`;
+                    heart.style.opacity = '0';
+                    heart.style.transition = 'all 1s';
+                    document.body.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.style.opacity = '1';
+                        heart.style.transform += ` translateY(-${Math.random()*300 + 100}px)`;
+                    }, 10);
+                    
+                    setTimeout(() => {
+                        heart.style.opacity = '0';
+                        setTimeout(() => heart.remove(), 1000);
+                    }, 1000);
+                }
+            });
+            
+            // Control buttons functionality
+            document.querySelectorAll('.control.close').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const terminal = this.closest('.terminal');
+                    terminal.style.transform = 'scale(0)';
+                    terminal.style.opacity = '0';
+                    setTimeout(() => {
+                        terminal.style.display = 'none';
+                    }, 500);
+                });
+            });
+            
+            document.querySelectorAll('.control.minimize').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const terminal = this.closest('.terminal');
+                    const body = terminal.querySelector('.terminal-body-main');
+                    if(body.style.display === 'none') {
+                        body.style.display = 'block';
+                        terminal.style.height = 'auto';
+                    } else {
+                        body.style.display = 'none';
+                        terminal.style.height = '50px';
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.control.maximize').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const terminal = this.closest('.terminal');
+                    if(terminal.style.width === '100%') {
+                        terminal.style.width = '';
+                        terminal.style.height = '';
+                        terminal.style.maxWidth = '550px';
+                    } else {
+                        terminal.style.width = '100%';
+                        terminal.style.height = '500px';
+                        terminal.style.maxWidth = '100%';
+                    }
+                });
+            });
+            
+            // Resize canvas on window resize
+            window.addEventListener('resize', function() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+            
+            // Start matrix animation
+            setInterval(drawMatrix, 35);
+            
+            // Create particles
+            createParticles();
+            
+            // Start terminal typing effects
+            setTimeout(typeTerminal1Line, 1000);
+            setTimeout(typeTerminal2Line, 2000);
+            
+            // Add random glitch effects periodically
+            setInterval(() => {
+                if(Math.random() > 0.7) {
+                    const terminals = document.querySelectorAll('.terminal');
+                    const randomTerminal = terminals[Math.floor(Math.random() * terminals.length)];
+                    randomTerminal.style.boxShadow = '0 0 30px #f0f';
+                    setTimeout(() => {
+                        randomTerminal.style.boxShadow = '0 0 25px rgba(0, 255, 0, 0.3)';
+                    }, 200);
+                }
+            }, 3000);
+        }
+        
+        // Auto-focus on username field when page loads
+        window.onload = function() {
+            document.getElementById('username').focus();
+        };
+    </script>
+</body>
+</html>
