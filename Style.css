@@ -1,0 +1,793 @@
+/* style.css - External Stylesheet for Secure Access: System Love Protocol */
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', monospace;
+}
+
+body {
+    background-color: #000;
+    color: #0f0;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Login Page */
+#loginPage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+}
+
+#mainContent {
+    display: none;
+}
+
+/* Background Effects */
+.matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    opacity: 0.15;
+}
+
+/* Moving Particles */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background-color: #0f0;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #0f0;
+    animation: float 15s infinite linear;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(100px);
+        opacity: 0;
+    }
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Login Terminal */
+.login-terminal {
+    background-color: rgba(0, 20, 0, 0.8);
+    border: 2px solid #0f0;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 500px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+    animation: pulse-glow 3s infinite alternate;
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 40px rgba(0, 255, 0, 0.8);
+    }
+}
+
+.terminal-header {
+    background-color: rgba(10, 40, 10, 0.9);
+    padding: 12px 20px;
+    border-bottom: 1px solid #0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.terminal-title {
+    font-weight: bold;
+    color: #0f0;
+    font-size: 1.1rem;
+}
+
+.terminal-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.close {
+    background-color: #f00;
+}
+
+.minimize {
+    background-color: #ff0;
+}
+
+.maximize {
+    background-color: #0f0;
+}
+
+.terminal-body {
+    padding: 30px;
+}
+
+.login-message {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+    color: #8f8;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-label {
+    color: #0f0;
+    font-size: 1rem;
+}
+
+.form-input {
+    background-color: rgba(0, 10, 0, 0.7);
+    border: 1px solid #0f0;
+    border-radius: 3px;
+    padding: 12px 15px;
+    color: #8f8;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.form-input:focus {
+    border-color: #0ff;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.login-btn {
+    background-color: #0a2a0a;
+    border: 1px solid #0f0;
+    border-radius: 3px;
+    padding: 15px;
+    color: #0f0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-btn:hover {
+    background-color: #0f3a0f;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    transform: translateY(-2px);
+}
+
+.login-btn:active {
+    transform: translateY(1px);
+}
+
+.login-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.login-btn:hover::after {
+    left: 100%;
+}
+
+.hint {
+    text-align: center;
+    margin-top: 20px;
+    color: #8f8;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.error-message {
+    color: #f00;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    height: 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.error-message.show {
+    opacity: 1;
+}
+
+/* Main Website */
+/* Header */
+header {
+    text-align: center;
+    padding: 40px 20px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.glitch-container {
+    position: relative;
+    display: inline-block;
+}
+
+.logo {
+    font-size: 3.5rem;
+    color: #0f0;
+    text-shadow: 0 0 10px #0f0;
+    letter-spacing: 8px;
+    margin-bottom: 10px;
+    position: relative;
+    animation: glitch 5s infinite;
+}
+
+@keyframes glitch {
+    0%, 100% {
+        transform: translate(0);
+    }
+    1% {
+        transform: translate(-2px, 2px);
+    }
+    2% {
+        transform: translate(-2px, -2px);
+    }
+    3% {
+        transform: translate(2px, 2px);
+    }
+    4% {
+        transform: translate(2px, -2px);
+    }
+    5% {
+        transform: translate(0);
+    }
+}
+
+.logo::before, .logo::after {
+    content: 'ZAINEB ABDELLI';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.logo::before {
+    animation: glitch-top 1s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+.logo::after {
+    animation: glitch-bottom 1.5s infinite;
+    clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+    -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-top {
+    0%, 100% {
+        transform: translate(0);
+        color: #0f0;
+    }
+    33% {
+        transform: translate(-1px, 1px);
+        color: #f0f;
+    }
+    66% {
+        transform: translate(1px, -1px);
+        color: #0ff;
+    }
+}
+
+@keyframes glitch-bottom {
+    0%, 100% {
+        transform: translate(0);
+        color: #0f0;
+    }
+    33% {
+        transform: translate(1px, -1px);
+        color: #f0f;
+    }
+    66% {
+        transform: translate(-1px, 1px);
+        color: #0ff;
+    }
+}
+
+.tagline {
+    font-size: 1.3rem;
+    color: #8f8;
+    opacity: 0.9;
+    margin-top: 20px;
+    animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Main Content */
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.terminal {
+    background-color: rgba(0, 20, 0, 0.7);
+    border: 1px solid #0f0;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 550px;
+    overflow: hidden;
+    box-shadow: 0 0 25px rgba(0, 255, 0, 0.3);
+    animation: float-up 6s ease-in-out infinite;
+}
+
+@keyframes float-up {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.terminal:nth-child(2) {
+    animation-delay: 1s;
+}
+
+.terminal-body-main {
+    padding: 25px;
+    min-height: 280px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.command-line {
+    display: flex;
+    margin-bottom: 15px;
+    animation: typewriter 0.1s steps(40, end);
+}
+
+@keyframes typewriter {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.prompt {
+    color: #0f0;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
+.command {
+    color: #8f8;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Heart Section */
+.heart-section {
+    text-align: center;
+    margin: 50px 0;
+    position: relative;
+}
+
+.heart-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.heart-container:hover {
+    transform: scale(1.1);
+}
+
+.heart {
+    font-size: 5rem;
+    color: #f00;
+    animation: heartbeat 1.2s infinite;
+    text-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+    filter: drop-shadow(0 0 10px #f00);
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    10% {
+        transform: scale(1.1);
+    }
+    20% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.15);
+    }
+    40% {
+        transform: scale(1);
+    }
+}
+
+.heart-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #f00;
+    border-radius: 50%;
+    animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.heart-message {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #ff6b9d;
+    animation: slide-in 2s ease-out;
+}
+
+@keyframes slide-in {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Secret Message */
+.secret-section {
+    text-align: center;
+    margin: 60px 0;
+    opacity: 0;
+    transition: opacity 2s, transform 2s;
+    transform: translateY(50px);
+}
+
+.secret-section.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.secret-box {
+    display: inline-block;
+    padding: 30px;
+    border: 2px dashed #ff6b9d;
+    border-radius: 10px;
+    background-color: rgba(30, 10, 20, 0.3);
+    max-width: 800px;
+    position: relative;
+    overflow: hidden;
+}
+
+.secret-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 107, 157, 0.2), transparent);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+.secret-title {
+    font-size: 1.8rem;
+    color: #ff6b9d;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255, 107, 157, 0.5);
+}
+
+.secret-text {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #ff9ec0;
+}
+
+.secret-text p {
+    margin-bottom: 15px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid #0f0;
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #0f0, transparent);
+    animation: scan 3s linear infinite;
+}
+
+@keyframes scan {
+    0% {
+        top: 0;
+    }
+    100% {
+        top: 100%;
+    }
+}
+
+.footer-text {
+    color: #8f8;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+/* Logout Button */
+.logout-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(0, 20, 0, 0.7);
+    border: 1px solid #0f0;
+    color: #0f0;
+    padding: 8px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    z-index: 100;
+    transition: all 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: rgba(0, 40, 0, 0.9);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+/* Access Granted Animation */
+.access-granted {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s;
+}
+
+.access-granted.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.access-message {
+    font-size: 3rem;
+    color: #0f0;
+    text-align: center;
+    text-shadow: 0 0 20px #0f0;
+    animation: pulse 1s infinite;
+}
+
+/* Terminal Control Hover Effects */
+.control:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 20, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #0f0;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0ff;
+}
+
+/* Selection Styling */
+::selection {
+    background-color: rgba(0, 255, 0, 0.3);
+    color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .logo {
+        font-size: 2rem;
+        letter-spacing: 4px;
+    }
+    
+    .terminal {
+        max-width: 100%;
+    }
+    
+    .heart {
+        font-size: 3.5rem;
+    }
+    
+    .login-terminal {
+        width: 95%;
+    }
+    
+    .access-message {
+        font-size: 2rem;
+    }
+    
+    .secret-title {
+        font-size: 1.5rem;
+    }
+    
+    .secret-text {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+    
+    .tagline {
+        font-size: 1rem;
+    }
+    
+    .terminal-header {
+        padding: 10px 15px;
+    }
+    
+    .terminal-body, .terminal-body-main {
+        padding: 20px;
+    }
+    
+    .command-line {
+        flex-direction: column;
+        margin-bottom: 10px;
+    }
+    
+    .prompt {
+        margin-bottom: 5px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .login-terminal, .access-granted, .logout-btn, 
+    .particles, .matrix-bg, .heart-ring, .scan-line {
+        display: none !important;
+    }
+    
+    body {
+        background-color: white !important;
+        color: black !important;
+    }
+    
+    .terminal {
+        border: 1px solid black !important;
+        box-shadow: none !important;
+        animation: none !important;
+    }
+}
